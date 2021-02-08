@@ -1,4 +1,4 @@
-# Local Library
+# Inventory Application
 
 ## About the project
 
