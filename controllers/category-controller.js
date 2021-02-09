@@ -21,3 +21,16 @@ exports.index = function (req, res) {
     }
   );
 };
+
+exports.category_list = function (req,res) {
+  Category.find()
+    .sort([["name", "ascending"]])
+    .exec(function (err, results) {
+      if (err) return next(err);
+
+      res.render("category-list", {
+        title: "All categories",
+        category_list: results,
+      });
+    });
+};
