@@ -34,4 +34,31 @@ exports.category_list = function (req, res) {
       });
     });
 };
+exports.category_detail = function (req, res) {
+  const { id } = req.params;
+  async.parallel(
+    {
+      category: function (callback) {
+        Category.findById(id).exec(callback);
+      },
+      category_items: function (callback) {
+        Item.findById({ category: id }).exec(callback);
+      },
+    },
+    function (err, results) {
+      if (err) return next(err);
 
+      if (results.category == null) {
+        // No results.
+        const err = new Error("Author not found");
+        err.status = 404;
+        return next(err);
+      }
+      res.render("category-detail", {
+        title: "Category Detail",
+        category: results.category,
+        category_items: results.category_items,
+      });
+    }
+  );
+};
