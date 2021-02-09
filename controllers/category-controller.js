@@ -22,7 +22,7 @@ exports.index = function (req, res) {
   );
 };
 
-exports.category_list = function (req,res) {
+exports.category_list = function (req, res) {
   Category.find()
     .sort([["name", "ascending"]])
     .exec(function (err, results) {
@@ -34,3 +34,4 @@ exports.category_list = function (req,res) {
       });
     });
 };
+
