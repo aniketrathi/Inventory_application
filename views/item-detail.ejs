@@ -1,16 +1,13 @@
 <%- include('partials/header') %>
-<h1>Category:<%= category.name %></h1>
-<p><%= category.description %></p>
+<h1>Item:<%= item.name %></h1>
 <div style="margin-left: 20px; margin-top: 20px">
-  <h4>Items</h4>
-  <dl>
-    <% if(category_items[0]){ category_items.map(item => { %>
-    <dt><a href="<%= item.url %>"><%= item.name %></a></dt>
-    <dd><%= item.description %></dd>
-    <% }) } else{ %>
-    <p>This Category has no items.</p>
-    <% } %>
-  </dl>
+  <p><%= item.description %></p>
+  <br />
+  <p><b>Price: </b><%= item.price %></p>
+  <br />
+  <p style="color: blue;">Only <%= item.number_in_stock %> left</p>
+  <br />
+  <p><b>Category: </b><a href="<%= item.category.url %>"><%= item.category.name %></a></p>
 </div>
 <hr />
 <p>
