@@ -34,7 +34,8 @@ exports.category_list = function (req, res) {
       });
     });
 };
-exports.category_detail = function (req, res) {
+
+exports.category_detail = function (req, res, next) {
   const { id } = req.params;
   async.parallel(
     {
@@ -42,15 +43,17 @@ exports.category_detail = function (req, res) {
         Category.findById(id).exec(callback);
       },
       category_items: function (callback) {
-        Item.findById({ category: id }).exec(callback);
+        Item.find({ category: id }, "title").exec(callback);
       },
     },
     function (err, results) {
-      if (err) return next(err);
+      if (err) {
+        return next(err);
+      }
 
       if (results.category == null) {
         // No results.
-        const err = new Error("Author not found");
+        const err = new Error("Category not found");
         err.status = 404;
         return next(err);
       }
@@ -61,4 +64,23 @@ exports.category_detail = function (req, res) {
       });
     }
   );
+};
+
+exports.category_create_get = function (req, res, next) {
+  res.render("category-form", { title: "Create category" });
+};
+
+exports.category_create_post = function (req, res, next) {
+  const { name, description } = req.body;
+
+  const category = new Category({
+    name: name,
+    description: description,
+  });
+  category.save(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect(category.url);
+  });
 };

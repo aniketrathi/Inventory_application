@@ -2,7 +2,7 @@ const async = require("async");
 const Category = require("../models/category");
 const Item = require("../models/item");
 
-exports.item_list = function (req, res) {
+exports.item_list = function (req, res, next) {
   Item.find()
     .sort([["name", "ascending"]])
     .exec(function (err, results) {
@@ -15,7 +15,7 @@ exports.item_list = function (req, res) {
     });
 };
 
-exports.item_detail = function (req, res) {
+exports.item_detail = function (req, res, next) {
   const { id } = req.params;
   Item.findById(id)
     .populate("category")
