@@ -5,7 +5,7 @@
   <h4>Items</h4>
   <dl>
     <% if(category_items[0]){ category_items.map(item => { %>
-    <dt><a href="<%= item.url %>"><%= item.name %></a></dt>
+    <dt><a href="<%= item.url %>"><b><%= item.name %></b>></a></dt>
     <dd><%= item.description %></dd>
     <% }) } else{ %>
     <p>This Category has no items.</p>

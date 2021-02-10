@@ -1,0 +1,77 @@
+<%- include('partials/header') %>
+<h1><%= title %></h1>
+<form method="POST" action="">
+  <div class="form-group">
+    <label for="name">Name:</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      value="<%= locals.item === undefined ? '' : locals.item.name %>"
+      class="form-control"
+      placeholder="i7"
+      required="true"
+    />
+  </div>
+  <div class="form-group">
+    <label for="category">Category:</label>
+    <select type="select" id="category" name="category" class="form-control">
+      <% if(!locals.item || !locals.item.category) %>
+      <option value="" disabled selected hidden>Select Category</option>
+      <% categories.sort(function(a, b) {let textA = a.name.toUpperCase(); let
+      textB = b.name.toUpperCase(); return (textA < textB) ? -1 : (textA >
+      textB) ? 1 : 0;}); categories.map(category => { if(locals.item &&
+      locals.item.category.toString() === category._id.toString()){ %>
+      <option value="<%= category._id %>" selected><%= category.name %></option>
+      <% } else {%>
+      <option value="<%= category._id %>"><%= category.name %></option>
+      <% } }) %>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="description">Description:</label>
+    <textarea
+      id="description"
+      name="description"
+      class="form-control"
+      placeholder="description......"
+      cols="2"
+      required="true"
+    >
+    <%= locals.item === undefined ? '' : locals.item.description %>
+    </textarea>
+  </div>
+  <div class="form-group">
+    <label for="price">Price(INR):</label>
+    <input
+      type="number"
+      id="price"
+      name="price"
+      value="<%= locals.item === undefined ? '' : locals.item.price %>"
+      class="form-control"
+      placeholder="999"
+      required="true"
+    />
+  </div>
+  <div class="form-group">
+    <label for="number_in_stock">Number in stock:</label>
+    <input
+      type="number"
+      id="number_in_stock"
+      name="number_in_stock"
+      value="<%= locals.item === undefined ? '' : locals.item.number_in_stock %>"
+      class="form-control"
+      placeholder="7"
+      required="true"
+    />
+  </div>
+  <br />
+  <input type="submit" value="Submit" class="btn btn-primary" />
+</form>
+<% if(locals.errors){ %>
+<ul>
+  <% errors.map(error => { %>
+  <li><%= error.msg %></li>
+  <% }) %>
+</ul>
+<% } - include('partials/footer') %>

@@ -43,7 +43,7 @@ exports.category_detail = function (req, res, next) {
         Category.findById(id).exec(callback);
       },
       category_items: function (callback) {
-        Item.find({ category: id }, "title").exec(callback);
+        Item.find({ category: id }).exec(callback);
       },
     },
     function (err, results) {
@@ -62,7 +62,7 @@ exports.category_detail = function (req, res, next) {
         category: results.category,
         category_items: results.category_items,
       });
-    }
+    },
   );
 };
 
