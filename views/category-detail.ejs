@@ -1,0 +1,25 @@
+<%- include('partials/header') %>
+<h1>Category:<%= category.name %></h1>
+<p><%= category.description %></p>
+<div style="margin-left: 20px; margin-top: 20px">
+  <h4>Items</h4>
+  <dl>
+    <% if(category_items[0]){ category_items.map(item => { %>
+    <dt><a href="<%= item.url %>"><b><%= item.name %></b></a></dt>
+    <dd><%= item.description %></dd>
+    <% }) } else{ %>
+    <p>This Category has no items.</p>
+    <% } %>
+  </dl>
+</div>
+<hr />
+<p>
+  <a href="<%=category.url%>/delete" class="btn btn-danger">Delete category</a>
+  <a
+    href="<%=category.url%>/update"
+    style="margin: 50px"
+    class="btn btn-primary"
+    >Update category</a
+  >
+</p>
+<%- include('partials/footer') %>

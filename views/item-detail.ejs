@@ -1,0 +1,22 @@
+<%- include('partials/header') %>
+<h1>Item:<%= item.name %></h1>
+<div style="margin-left: 20px; margin-top: 20px">
+  <p><%= item.description %></p>
+  <br />
+  <p><b>Price: </b><%= item.price %></p>
+  <br />
+  <p style="color: blue;">Only <%= item.number_in_stock %> left</p>
+  <br />
+  <p><b>Category: <a href="<%= item.category.url %>"><%= item.category.name %></a></b></p>
+</div>
+<hr />
+<p>
+  <a href="<%=item.url%>/delete" class="btn btn-danger">Delete category</a>
+  <a
+    href="<%=item.url%>/update"
+    style="margin-left: 50px"
+    class="btn btn-primary"
+    >Update category</a
+  >
+</p>
+<%- include('partials/footer') %>

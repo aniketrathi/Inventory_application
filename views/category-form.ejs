@@ -1,0 +1,37 @@
+<%- include('partials/header') %>
+<h1><%= title %></h1>
+<form method="POST" action="">
+  <div class="form-group">
+    <label for="name">Name:</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      value="<%= locals.category === undefined ? '' : locals.category.name %>"
+      class="form-control"
+      placeholder="CPU"
+      required="true"
+    />
+  </div>
+  <div class="form-group">
+    <label for="description">Description:</label>
+    <input
+      type="text"
+      id="description"
+      name="description"
+      value="<%= locals.category === undefined ? '' : locals.category.description %>"
+      class="form-control"
+      placeholder="Description........."
+      required="true"
+    />
+  </div>
+  <br />
+  <input type="submit" value="Submit" class="btn btn-primary" />
+</form>
+<% if(locals.errors){ %>
+<ul>
+  <% errors.map(error => { %>
+  <li><%= error.msg %></li>
+  <% }) %>
+</ul>
+<% } - include('partials/footer') %>
