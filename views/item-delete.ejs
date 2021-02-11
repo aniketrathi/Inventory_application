@@ -1,0 +1,13 @@
+<%- include('partials/header') %>
+<h1>Item:<%= item.name %></h1>
+<p>
+  <%= item.description %>
+</p>
+<p>
+    <b>Price: <%= item.price %></b>
+</p>
+<p>Do you really want to delete this item?</p>
+<form method="POST" action="">
+  <input type="submit" value="Delete" class="btn btn-danger" />
+</form>
+<% - include('partials/footer') %>
