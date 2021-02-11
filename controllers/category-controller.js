@@ -1,6 +1,7 @@
 const async = require("async");
 const Category = require("../models/category");
 const Item = require("../models/item");
+const { validationResult } = require("express-validator");
 
 exports.index = function (req, res) {
   async.parallel(
@@ -69,9 +70,18 @@ exports.category_detail = function (req, res, next) {
 exports.category_create_get = function (req, res, next) {
   res.render("category-form", { title: "Create category" });
 };
-
 exports.category_create_post = function (req, res, next) {
   const { name, description } = req.body;
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.render("category-form", {
+      title: "Create category",
+      category: req.body,
+      errors: errors.array(),
+    });
+    return;
+  }
 
   const category = new Category({
     name: name,

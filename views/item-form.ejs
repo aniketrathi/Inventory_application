@@ -20,7 +20,7 @@
       <option value="" disabled selected hidden>Select Category</option>
       <% categories.sort(function(a, b) {let textA = a.name.toUpperCase(); let
       textB = b.name.toUpperCase(); return (textA < textB) ? -1 : (textA >
-      textB) ? 1 : 0;}); categories.map(category => { if(locals.item &&
+      textB) ? 1 : 0;}); categories.map(category => { if(locals.item && locals.item.category &&
       locals.item.category.toString() === category._id.toString()){ %>
       <option value="<%= category._id %>" selected><%= category.name %></option>
       <% } else {%>

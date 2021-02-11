@@ -1,6 +1,7 @@
 const async = require("async");
 const Category = require("../models/category");
 const Item = require("../models/item");
+const { validationResult } = require("express-validator");
 
 exports.item_list = function (req, res, next) {
   Item.find()
@@ -38,8 +39,22 @@ exports.item_create_get = function (req, res) {
   });
 };
 
-exports.item_create_post = function (req, res) {
+exports.item_create_post = function (req, res, next) {
   const { name, description, category, price, number_in_stock } = req.body;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    Category.find({}).exec(function (err, results) {
+      if (err) return next(err);
+
+      res.render("item-form", {
+        title: "Create item",
+        item: req.body,
+        categories: results,
+        errors: errors.array(),
+      });
+    });
+    return;
+  }
 
   const item = new Item({
     name: name,
@@ -97,11 +112,10 @@ exports.item_update_get = function (req, res) {
   );
 };
 
-exports.item_update_post = function(req,res){
-  const {id} = req.params;
-  Item.findByIdAndUpdate(id,req.body).exec(function(err,results){
-    if(err)
-      return next(err);
+exports.item_update_post = function (req, res) {
+  const { id } = req.params;
+  Item.findByIdAndUpdate(id, req.body).exec(function (err, results) {
+    if (err) return next(err);
     res.redirect(results.url);
-  })
-}
+  });
+};
