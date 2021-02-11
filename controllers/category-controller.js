@@ -120,3 +120,22 @@ exports.category_delete_post = function (req, res) {
     res.redirect("/catalog/categories");
   });
 };
+
+exports.category_update_get = function (req, res) {
+  const { id } = req.params;
+  Category.findById(id).exec(function (err, results) {
+    if (err) return next(err);
+    res.render("category-form", {
+      title: "Update form",
+      category: results,
+    });
+  });
+};
+
+exports.category_update_post = function (req, res) {
+  const { id } = req.params;
+  Category.findByIdAndUpdate(id, req.body).exec(function (err, results) {
+    if (err) return next(err);
+    res.redirect(results.url);
+  });
+};

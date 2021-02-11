@@ -74,3 +74,34 @@ exports.item_delete_post = function (req, res) {
     res.redirect("/catalog/items");
   });
 };
+
+exports.item_update_get = function (req, res) {
+  const { id } = req.params;
+  async.parallel(
+    {
+      item: function (callback) {
+        Item.findById(id).exec(callback);
+      },
+      categories: function (callback) {
+        Category.find({}).exec(callback);
+      },
+    },
+    function (err, results) {
+      if (err) return next(err);
+      res.render("item-form", {
+        title: "Update form",
+        item: results.item,
+        categories: results.categories,
+      });
+    }
+  );
+};
+
+exports.item_update_post = function(req,res){
+  const {id} = req.params;
+  Item.findByIdAndUpdate(id,req.body).exec(function(err,results){
+    if(err)
+      return next(err);
+    res.redirect(results.url);
+  })
+}
