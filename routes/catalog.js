@@ -20,7 +20,13 @@ router.post(
   category_controller.category_create_post
 );
 
+router.get("/category/:id/delete", category_controller.category_delete_get);
+
+router.post("/category/:id/delete",category_controller.category_delete_post);
+
 router.get("/category/:id", category_controller.category_detail);
+
+
 
 // ITEM ROUTE //
 router.get("/items", item_controller.item_list);

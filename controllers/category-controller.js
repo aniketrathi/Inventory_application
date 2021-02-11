@@ -62,7 +62,7 @@ exports.category_detail = function (req, res, next) {
         category: results.category,
         category_items: results.category_items,
       });
-    },
+    }
   );
 };
 
@@ -82,5 +82,41 @@ exports.category_create_post = function (req, res, next) {
       return next(err);
     }
     res.redirect(category.url);
+  });
+};
+
+exports.category_delete_get = function (req, res) {
+  const { id } = req.params;
+  async.parallel(
+    {
+      category: function (callback) {
+        Category.findById(id).exec(callback);
+      },
+      categories_items: function (callback) {
+        Item.find({ category: id }).exec(callback);
+      },
+    },
+    function (err, results) {
+      if (err) {
+        return next(err);
+      }
+      if (results.category == null) {
+        // No results.
+        res.redirect("/catalog/categories");
+      }
+      res.render("category-delete", {
+        title: "Delete category",
+        category: results.category,
+        category_items: results.categories_items,
+      });
+    }
+  );
+};
+
+exports.category_delete_post = function (req, res) {
+  const { id } = req.params;
+  Category.findByIdAndRemove(id).exec(function (err, results) {
+    if (err) return next(err);
+    res.redirect("/catalog/categories");
   });
 };
